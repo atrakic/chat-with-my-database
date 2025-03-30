@@ -1,0 +1,19 @@
+[project]
+name = "chat-with-my-database"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas>=2.2.3",
+    "pydantic-ai>=0.0.46",
+    "streamlit>=1.44.0",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "pylint>=3.3.6",
+    "pytest>=8.3.5",
+    "ruff>=0.11.2",
+]

@@ -1,0 +1,8 @@
+# don't send local dev files to docker context
+Dockerfile
+.git/
+.github/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
