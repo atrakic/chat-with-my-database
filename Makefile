@@ -19,7 +19,7 @@ sync:
 	uv sync
 
 test:
-	uv run pytest --verbose
+	PYTHONPATH=. uv run pytest tests
 
 clean:
 	docker-compose down --remove-orphans -v --rmi local
