@@ -49,6 +49,6 @@ COPY --chown=app:app /src/main.py ./
 ENV PATH="/app/bin:$PATH"
 
 EXPOSE 8501
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+HEALTHCHECK CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8501/_stcore/health')"
 
 ENTRYPOINT ["python", "-m", "streamlit", "run", "main.py", "--browser.gatherUsageStats", "false", "--server.port=8501", "--server.address=0.0.0.0"]
