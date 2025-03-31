@@ -87,9 +87,9 @@ def test_execute_query_update(setup_database):
 
     # Verify the update worked
     updated_record = execute_query("SELECT salary FROM employees WHERE id = 1")
-    assert isinstance(updated_record, pd.DataFrame), (
-        "Expected a DataFrame, but got a different type"
-    )
+    assert isinstance(
+        updated_record, pd.DataFrame
+    ), "Expected a DataFrame, but got a different type"
     assert not updated_record.empty, "Expected a non-empty DataFrame"
     # assert updated_record.iloc[0]["salary"] == 90000
 
@@ -121,9 +121,9 @@ def test_get_all_tables(setup_database):
 # Test natural language processing
 def test_process_natural_language_show_all(setup_database):
     result = process_natural_language("show all employees")
-    assert isinstance(result, pd.DataFrame), (
-        "Expected a DataFrame, but got a different type"
-    )
+    assert isinstance(
+        result, pd.DataFrame
+    ), "Expected a DataFrame, but got a different type"
     assert len(result) == 5
 
 
@@ -135,9 +135,9 @@ def test_process_natural_language_schema(setup_database):
 
 def test_process_natural_language_highest_salary(setup_database):
     result = process_natural_language("find the employee with the highest salary")
-    assert isinstance(result, pd.DataFrame), (
-        "Expected a DataFrame, but got a different type"
-    )
+    assert isinstance(
+        result, pd.DataFrame
+    ), "Expected a DataFrame, but got a different type"
     assert (
         result.iloc[0]["name"] == "Emily Johnson"
     )  # Highest salary in our sample data
@@ -145,7 +145,7 @@ def test_process_natural_language_highest_salary(setup_database):
 
 def test_process_natural_language_unknown_query(setup_database):
     result = process_natural_language("some random text that doesn't make sense")
-    assert isinstance(result, str), (
-        "Expected a string error message, but got a different type"
-    )
+    assert isinstance(
+        result, str
+    ), "Expected a string error message, but got a different type"
     assert "I couldn't convert that" in result
