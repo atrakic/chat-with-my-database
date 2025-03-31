@@ -1,5 +1,7 @@
 # chat-with-my-database
 
+[![CI](https://github.com/atrakic/chat-with-my-database/actions/workflows/ci.yml/badge.svg)](https://github.com/atrakic/chat-with-my-database/actions/workflows/ci.yml)
+
 ![Example Usage](docs/example.png)
 
 ## Description
