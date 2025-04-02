@@ -1,6 +1,7 @@
 import os
 import streamlit as st
 import pandas as pd
+from dotenv import load_dotenv
 
 from utils import (
     init_db,
@@ -10,7 +11,11 @@ from utils import (
 )
 
 
+load_dotenv()
+
+
 def main():
+    st.set_page_config(page_title="Chat with My Database", page_icon=":speech_balloon:")
     st.title("Chat with My Database")
 
     # Initialize database on first run

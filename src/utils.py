@@ -1,30 +1,37 @@
 import sqlite3
 import pandas as pd
 import re
+import os
 
-# from typing import Dict, List, Optional
-# from pydantic import BaseModel, Field
+
+from pydantic import BaseModel
 from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIModel
 
 
-def init_db():
-    """Initialize the database with sample data."""
-    conn = sqlite3.connect("mydatabase.db")
-    cursor = conn.cursor()
-
-    # Create tables
-    cursor.execute(
-        """
+DB_SCHEMA = """
     CREATE TABLE IF NOT EXISTS employees (
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
         title TEXT NOT NULL,
         department TEXT NOT NULL,
         salary REAL NOT NULL
-    )
-    """
-    )
+    );
+"""
+
+
+class MyModel(BaseModel):
+    """Pydantic model for the agent response."""
+
+    sql_query: str
+
+
+def init_db() -> None:
+    """Initialize the database with sample data."""
+    conn = sqlite3.connect("mydatabase.db")
+    cursor = conn.cursor()
+
+    cursor.execute(DB_SCHEMA)
 
     # Add sample data if table is empty
     cursor.execute("SELECT COUNT(*) FROM employees")
@@ -42,7 +49,7 @@ def init_db():
     conn.close()
 
 
-def execute_query(query):
+def execute_query(query) -> str:
     """Execute an SQL query and return the results."""
     conn = sqlite3.connect("mydatabase.db")
     try:
@@ -64,7 +71,7 @@ def execute_query(query):
         return f"Error executing query: {str(e)}"
 
 
-def get_table_schema(table_name):
+def get_table_schema(table_name) -> str:
     """Get the schema for a specific table."""
     conn = sqlite3.connect("mydatabase.db")
     cursor = conn.cursor()
@@ -84,7 +91,7 @@ def get_table_schema(table_name):
         return f"Error getting schema: {str(e)}"
 
 
-def get_all_tables():
+def get_all_tables() -> str:
     """Get all tables in the database."""
     conn = sqlite3.connect("mydatabase.db")
     cursor = conn.cursor()
@@ -100,7 +107,7 @@ def get_all_tables():
     return "Tables in database: " + ", ".join(table_list)
 
 
-def process_natural_language(user_input):
+def process_natural_language(user_input) -> str:
     """Process natural language input and convert to SQL query."""
     user_input = user_input.lower()
 
@@ -125,6 +132,8 @@ def process_natural_language(user_input):
         or "list" in user_input
         or "get" in user_input
         or "find" in user_input
+        or "what" in user_input
+        or "who" in user_input
     ):
         if "all" in user_input and "employees" in user_input:
             return execute_query("SELECT * FROM employees")
@@ -152,13 +161,28 @@ def process_natural_language(user_input):
 # https://platform.openai.com/settings/organization/usage
 def process_agent(user_input):
     """Process agent."""
+    user_input = user_input.lower()
 
-    model = OpenAIModel("gpt-4o")
+    model_name = os.getenv("PYDANTIC_AI_MODEL", "gpt-4o")
+    model = OpenAIModel(
+        model_name=model_name,
+    )
+    print(f"Using ai model: {model_name}")
 
-    # Define a PydanticAI Agent
     agent = Agent(
         model=model,
-        system_prompt="You are a helpful customer support agent. Be concise and friendly.",
+        result_type=MyModel,
+        system_prompt="""
+        You are an agent that can execute SQL queries on a SQLite database.
+        Based on the user input and database schema below, your job is to write a SQL query that would answer the user's question.
+
+        Database schema:
+        {DB_SCHEMA}
+
+        User input:
+        {user_prompt}
+        """,
+        instrument=True,
     )
 
     # Run the agent with the user input
@@ -166,6 +190,7 @@ def process_agent(user_input):
         response = agent.run_sync(
             user_input,
         )
+        print(response.usage())
         return response.data
     except Exception as e:
         return f"Error processing input: {str(e)}"
