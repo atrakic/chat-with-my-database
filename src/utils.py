@@ -1,8 +1,8 @@
 import sqlite3
 import pandas as pd
+from pandas import DataFrame
 import re
 import os
-
 
 from pydantic import BaseModel
 from pydantic_ai import Agent
@@ -49,7 +49,7 @@ def init_db() -> None:
     conn.close()
 
 
-def execute_query(query) -> str:
+def execute_query(query) -> DataFrame | str:
     """Execute an SQL query and return the results."""
     conn = sqlite3.connect("mydatabase.db")
     try:
@@ -107,7 +107,7 @@ def get_all_tables() -> str:
     return "Tables in database: " + ", ".join(table_list)
 
 
-def process_natural_language(user_input) -> str:
+def process_natural_language(user_input) -> str | DataFrame:
     """Process natural language input and convert to SQL query."""
     user_input = user_input.lower()
 
@@ -167,8 +167,9 @@ def process_agent(user_input):
     model = OpenAIModel(
         model_name=model_name,
     )
-    print(f"Using ai model: {model_name}")
+    print(f"Using AI model: {model_name}")
 
+    # Include database schema and dependencies in the system prompt
     agent = Agent(
         model=model,
         result_type=MyModel,
@@ -178,18 +179,12 @@ def process_agent(user_input):
 
         Database schema:
         {DB_SCHEMA}
-
-        User input:
-        {user_prompt}
         """,
-        instrument=True,
     )
 
     # Run the agent with the user input
     try:
-        response = agent.run_sync(
-            user_input,
-        )
+        response = agent.run_sync(user_input)
         print(response.usage())
         return response.data
     except Exception as e:

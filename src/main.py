@@ -14,7 +14,7 @@ from utils import (
 load_dotenv()
 
 
-def main():
+def main() -> None:
     st.set_page_config(page_title="Chat with My Database", page_icon=":speech_balloon:")
     st.title("Chat with My Database")
 
@@ -37,7 +37,6 @@ def main():
 
         if mode == "Natural Language":
             if os.getenv("OPENAI_API_KEY"):
-                print("Using OpenAI API key")
                 result = process_agent(user_input)
             else:
                 result = process_natural_language(user_input)
