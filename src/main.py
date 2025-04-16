@@ -15,8 +15,8 @@ load_dotenv()
 
 
 def main() -> None:
-    st.set_page_config(page_title="Chat with My Database", page_icon=":speech_balloon:")
-    st.title("Chat with My Database")
+    st.set_page_config(page_title="Chat with my database", page_icon=":speech_balloon:")
+    st.title("Chat with my Database")
 
     # Initialize database on first run
     if "db_initialized" not in st.session_state:

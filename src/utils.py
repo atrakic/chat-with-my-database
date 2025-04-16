@@ -11,7 +11,7 @@ from pydantic_ai.models.openai import OpenAIModel
 
 DB_SCHEMA = """
     CREATE TABLE IF NOT EXISTS employees (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         title TEXT NOT NULL,
         department TEXT NOT NULL,
