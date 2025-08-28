@@ -172,7 +172,7 @@ def process_agent(user_input):
     # Include database schema and dependencies in the system prompt
     agent = Agent(
         model=model,
-        result_type=MyModel,
+        output_type=MyModel,
         system_prompt="""
         You are an agent that can execute SQL queries on a SQLite database.
         Based on the user input and database schema below, your job is to write a SQL query that would answer the user's question.
@@ -186,6 +186,6 @@ def process_agent(user_input):
     try:
         response = agent.run_sync(user_input)
         print(response.usage())
-        return response.data
+        return response.output
     except Exception as e:
         return f"Error processing input: {str(e)}"
