@@ -14,6 +14,16 @@ def main() -> None:
         "Use natural language to query SQLite database. Powered by OpenAI's GPT models and Pydantic AI."
     )
 
+    if not os.getenv("OPENAI_API_KEY"):
+        api_key_input = st.text_input(
+            "OpenAI API key",
+            type="password",
+            placeholder="sk-...",
+            help="Stored only for this session.",
+        )
+        if api_key_input:
+            os.environ["OPENAI_API_KEY"] = api_key_input
+
     if "db_initialized" not in st.session_state:
         init_db()
         st.session_state.db_initialized = True
