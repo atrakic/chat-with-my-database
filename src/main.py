@@ -11,7 +11,7 @@ def main() -> None:
     st.set_page_config(page_title="Chat with my database", page_icon=":speech_balloon:")
     st.title("Chat with my database")
     st.caption(
-        "Use natural language to query SQLite database. Powered by OpenAI's GPT models."
+        "Use natural language to query SQLite database. Powered by OpenAI's GPT models and Pydantic AI."
     )
 
     if not os.getenv("OPENAI_API_KEY"):
@@ -51,8 +51,11 @@ def main() -> None:
         st.markdown(
             """
         ### Natural Language Examples:
-        - Show schema for all tables
-        - List all tables
+        - Show all employees
+        - List employees in Engineering
+        - Find the employee with the highest salary
+        - What's the average salary?
+        - Show employee count by department
         """
         )
 
