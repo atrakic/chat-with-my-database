@@ -11,18 +11,20 @@ def main() -> None:
     st.set_page_config(page_title="Chat with my database", page_icon=":speech_balloon:")
     st.title("Chat with my database")
     st.caption(
-        "Use natural language to query SQLite database. Powered by OpenAI's GPT models and Pydantic AI."
+        "Use natural language to query SQLite database. Powered by OpenAI's GPT models."
     )
 
     if not os.getenv("OPENAI_API_KEY"):
         api_key_input = st.text_input(
-            "OpenAI API key",
+            "Please add your OpenAI API key to continue.",
             type="password",
             placeholder="sk-...",
             help="Stored only for this session.",
         )
         if api_key_input:
             os.environ["OPENAI_API_KEY"] = api_key_input
+        else:
+            st.stop()
 
     if "db_initialized" not in st.session_state:
         init_db()
