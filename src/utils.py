@@ -54,6 +54,7 @@ def _execute_sql(query: str) -> list[dict[str, object]]:
     conn.close()
     return [dict(row) for row in rows]
 
+
 # https://platform.openai.com/settings/organization/usage
 def process_agent(user_input: str) -> list[dict[str, object]] | str:
     """Process agent, run SQL, and return query results."""
