@@ -40,7 +40,10 @@ def main() -> None:
 
         st.subheader("Result:")
         result = process_agent(user_input)
-        st.dataframe(result, use_container_width=True)
+        if isinstance(result, str):
+            st.error(result)
+        else:
+            st.dataframe(result, width="stretch")
 
     with st.expander("Help & Examples"):
         st.markdown(
