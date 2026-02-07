@@ -5,7 +5,8 @@
 ![Example Usage](docs/example.png)
 
 ## Description
-`chat-with-my-database` is a project that enables users to interact with their database using natural language. It leverages AI to translate user queries into SQL commands, making database management more intuitive and accessible.
+`chat-with-my-database` is a project that enables users to interact with database using natural language.
+It leverages AI to translate user queries into SQL commands, making database management more intuitive and accessible.
 
 ## Usage
 1. Clone the repository:
