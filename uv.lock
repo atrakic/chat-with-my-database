@@ -188,7 +188,6 @@ version = "0.1.1"
 source = { virtual = "." }
 dependencies = [
     { name = "dotenv" },
-    { name = "pandas" },
     { name = "pydantic-ai-slim", extra = ["openai"] },
     { name = "streamlit" },
 ]
@@ -205,7 +204,6 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "dotenv", specifier = ">=0.9.9" },
-    { name = "pandas", specifier = ">=2.2.3" },
     { name = "pydantic-ai-slim", extras = ["openai"], specifier = ">=0.8.0" },
     { name = "streamlit", specifier = ">=1.44.0" },
 ]
