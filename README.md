@@ -5,8 +5,8 @@
 ![Example Usage](docs/example.png)
 
 ## Description
-`chat-with-my-database` is a project that enables users to interact with database using natural language.
-It leverages AI to translate user queries into SQL commands, making database management more intuitive and accessible.
+`chat-with-my-database` is a Streamlit app for querying SQLite data with natural language.
+It uses OpenAI to turn questions into read-only SQL and show the results.
 
 ## Usage
 1. Clone the repository:
@@ -20,11 +20,11 @@ It leverages AI to translate user queries into SQL commands, making database man
    uv sync
    ```
 
-3. Configure your database connection in the `.env` file.
+3. Start the app.
 
 4. Start the application:
    ```bash
    uv run src/main.py
    ```
 
-5. Open the application in your browser and start interacting with database using natural language queries.
+5. Open it in your browser and enter your OpenAI API key when prompted.
