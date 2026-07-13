@@ -14,7 +14,7 @@ DB_SCHEMA = """
         title TEXT NOT NULL,
         department TEXT NOT NULL,
         salary REAL NOT NULL
-    );
+    ) STRICT;
 """
 
 
